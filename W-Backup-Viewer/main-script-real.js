@@ -53,16 +53,9 @@ function toLink(link) {
 const newURL = new URL(window.location.href);
 const chatName = newURL.searchParams.get("chat");
 
-// Real path (real paths for test, in .gitignore)
-// == For tests with real conversations, much more data, varied content, true situations ==
-let realPath = "";
-if (newURL.searchParams.get("real") == "true") {
-  //let Path_conversationTest = "conversations/Test/WhatsApp Chat with Test.txt";
-  realPath = "real/";
-}
-
 //let Path_conversationTest = "conversations/Test/WhatsApp Chat with Test.txt";
-const chatPath = "conversations/"+realPath+chatName+"/WhatsApp Chat with "+chatName+".txt";
+const chatPath = "conversations/"+chatName+"/WhatsApp Chat with "+chatName+".txt";
+
 //Affiche le bon titre de chat
 document.getElementById("chat-title").innerHTML = chatName;
 document.title= chatName+ " - Whatsapp Backup Viewer | GauGoth Corp.";
