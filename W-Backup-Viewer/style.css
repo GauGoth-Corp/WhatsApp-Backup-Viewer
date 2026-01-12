@@ -1,0 +1,509 @@
+/* Copyright © 2023-2025 GauGoth Corp. All rights reserved */
+
+@charset "utf-8";
+/* CSS Document */
+
+/* Note importante : on remarque que la totalité de la version du code "responsive" CSS est gérée 
+par la détection du type de "pointer".
+("@media (pointer:none), (pointer:coarse) { ... }")
+
+Il en existe 3 types détectables :
+- none
+Le mécanisme de saisie principal n'inclut pas de dispositif de pointage. 
+(exemple : assistant vocal)
+- coarse
+Le mécanisme de saisie principal inclut un dispositif de pointage dont la précision est limitée.
+(exemple : appareil mobile à écran tactile)
+- fine
+Le mécanisme de saisie principal inclut un dispositif de pointage précis.
+(exemple : ordinateur doté d'une souris)
+
+Il s'agit donc d'une ruse pour détecter un écran tactile. 
+Par ailleurs, un écran d'ordinateur tactile ne sera pas compté comme "mobile" car toujours doté d'une souris
+("mécanisme de saisie principal").
+
+Cette méthode est préférable à la détection de la largeur de l'écran ("@media (max-width: 768px) { ... }") : 
+après des tests, on aura remarqué que que celle-ci ne marche pas correctement, 
+surtout que de nombreux appareils mobiles ont en réalité une meilleure résolution qu'un écran d'ordinateur (smartphones compris !).
+Exemple : Galaxy A13 (test sur navigateur Chrome) : 980 x 1928 (portrait) ; 980 x 332 (paysage)
+*/
+
+/*######################### Principaux éléments ##########################*/
+/*RESPONSIVE*/
+/*<meta name="viewport" content="width=device-width, initial-scale=1">*/
+
+html, body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+  background-color: #6a6a6a;
+  margin: 0;
+  padding: 0;
+  color: #d8d8d8;
+  @media (pointer:none), (pointer:coarse) {font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;}
+
+}
+
+/* ~~ Sélecteurs d'éléments/balises ~~ */
+ul, ol, dl { /* En raison des variations entre les navigateurs, il est conseillé d'attribuer une valeur de zéro aux marges intérieures et aux marges des listes. A des fins de cohérence, vous pouvez définir les valeurs désirées dans cette zone ou dans les éléments de liste (LI, DT, DD) qu'elle contient. N'oubliez pas que les paramètres que vous définissez ici se répercuteront sur la liste .nav, sauf si vous rédigez un sélecteur plus spécifique. */
+  padding: 0;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p, ul, ol {
+  margin-top: 0px;	 /* la suppression de la marge supérieure résout un problème où les marges sortent de leur div conteneur. La marge inférieure restante l'éloignera de tout élément qui suit. */
+  padding-right: 15px;
+  padding-left: 15px; /* l'ajout de la marge intérieure aux côtés des éléments à l'intérieur des divs, et non aux divs proprement dit, évite le recours à des calculs de modèle de boîte. Une autre méthode consiste à employer une div imbriquée avec marge intérieure latérale. */
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+
+}
+@media (pointer:none), (pointer:coarse) {
+h1 {
+  font: bold 150%/1.4 Verdana, Arial, Helvetica, sans-serif;
+}
+h2, h3, h4, h5, h6 {
+  font: bold 130%/1.4 Verdana, Arial, Helvetica, sans-serif;
+}
+
+p {
+  font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+}
+
+}
+
+a img { /* ce sélecteur élimine la bordure bleue par défaut affichée dans certains navigateurs autour d'une image lorsque celle-ci est entourée d'un lien. */
+  border: none;
+
+}
+
+/* ~~ La définition du style des liens de votre site doit respecter cet ordre, y compris le groupe de sélecteurs qui créent l'effet de survol. ~~ */
+a:link {
+  color:#0045d2;
+  /*text-decoration: underline;*/ /* à moins que vous ne définissiez un style particulièrement exclusif pour vos liens, mieux vaut prévoir un soulignement, qui garantit une identification visuelle rapide. */
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+}
+a:visited {
+  color: #0054ff;
+  text-decoration: underline;
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+}
+a:hover, a:active, a:focus { /* ce groupe de sélecteurs offrira à un navigateur au clavier la même expérience de survol que celle d'une personne employant la souris. */
+  /*color: #7590c7*/
+  text-decoration: none;
+}
+
+/* ~~ ce conteneur entoure toutes les autres divs, en leur attribuant leur largeur sur base d'un pourcentage ~~ */
+.container {
+  width: 100%;
+  /*max-width: 1400px;*/ /* une valeur « max-width » peut s'avérer utile pour éviter que cette mise en page ne soit trop large sur un moniteur de grande taille. La lisibilité de la longueur de ligne est ainsi améliorée. IE6 ne tient pas compte de cette déclaration. */
+  /*min-width: 780px;*/ /* une valeur « min-width » peut s'avérer utile pour éviter que cette mise en page ne soit trop étroite. La longueur de ligne est ainsi plus lisible dans les colonnes latérales. IE6 ne tient pas compte de cette déclaration. */
+  background-color: #1f1f1f;
+  margin: 0 auto; /* la valeur automatique sur les côtés, associée à la largeur, permet de centrer la mise en page. Elle n'est pas nécessaire si vous fixez la largeur du conteneur à 100%. */
+  @media (pointer:none), (pointer:coarse) {width: 0%; max-width: 100%; min-width: 100%;} /* pour les écrans tactiles, la largeur du conteneur est fixée à 100% pour occuper toute la largeur de l'écran. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 10px 0;
+  background-color: #1f1f1f;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;    
+}
+
+/* ############## Elements de contenu ############## */
+.subtitle {
+  font: italic 120%/1.4 Verdana, Arial, Helvetica, sans-serif;
+  color: #b0b0b0;
+  margin-bottom: 10px;
+@media (pointer:none), (pointer:coarse) {font: italic 100%/1.4 Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px;}
+}
+
+.box {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  margin: 10px 0;
+  padding: 10px 15px;
+@media (pointer:none), (pointer:coarse) {margin: 20px 0; padding: 20px 30px;}
+}
+.box-icon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.box-reduce {
+  font-size: 3.2em;
+  color: #888;
+  float: right;
+  cursor: pointer;
+  position: relative;
+  top: -20px;
+  right: 5px;
+  transition: color 0.2s;
+  user-select: none;
+}
+.box-reduce:hover {
+  color: #ccc;
+}
+.box-reduce:active {
+  color: #fff;
+}
+.box-points {
+  /*font-size: 2em;*/
+  line-height: 0;       /* empêche de gonfler l’interligne */
+  color: #888;
+  cursor: pointer;
+  user-select: none;
+  display: none;
+  transition: color 0.2s;
+}
+.box-points:hover {
+  color: #ccc;
+}
+
+.shadow {
+
+  width: 30%;  /* largeur du dégradé */
+  height: 1.5em; /* hauteur de la zone estompée */  
+  mask-image: linear-gradient(to left, transparent, #2b2b2b 10%);
+}
+/* ############## Conversations Liste ############## */
+
+/* Liste des conversations */
+.conversations-List {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;  
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  background: #23272b;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  border: 3px solid #333;
+}
+
+.chat-item:hover,
+.chat-item:focus {
+background: #2d3238;
+box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.chat-item:active {
+background: #1a1d20;
+box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.chat-avatar {
+  width: 48px;
+  height: 48px;
+  padding: 5px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 16px;
+  border: 2px solid #444;
+  background: #444;
+}
+
+.chat-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-name {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-date {
+  font-size: 0.95em;
+  color: #a0a0a0;
+  align-self: flex-start;
+}
+
+/* Responsive pour écrans tactiles */
+@media (pointer:none), (pointer:coarse) {
+.chat-item {
+  padding: 28px 22px;
+  font-size: 1.5em;
+}
+.chat-avatar {
+  width: 72px;
+  height: 72px;
+  margin-right: 24px;
+}
+.chat-name {
+  font-size: 1.3em;
+}
+.chat-date {
+  font-size: 1.1em;
+}
+}
+
+/* ########################################### */
+/* ############## Style du chat ############## */
+/* ########################################### */
+
+/* ############ Chat header ############## */
+.chat-header {
+  background-color: #2b2b2b;
+  padding: 10px 15px;
+  border-bottom: 2px solid #4a4a4a;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* <-- alignement à gauche */
+  gap: 15px; /* espace entre les éléments */
+
+  /* Pour que le header prenne toute la largeur (et dépasse pas sur la droite)*/
+  box-sizing: border-box;    
+
+  /* Positionnement sticky pour rester en haut lors du scroll */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index : 200;      
+
+@media (pointer:none), (pointer:coarse) {padding: 20px 30px;}
+}
+.back-button {
+  background: none;
+  border: none;
+  color: #0054ff;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  margin-right: 10px; /* espace à droite du bouton */
+@media (pointer:none), (pointer:coarse) {font-size: 1.5em; padding: 10px 15px;}
+}
+.back-button:hover,
+.back-button:focus {
+  background: #1300a1;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.chat-avatar-inner {
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #444;
+  background: #444;
+@media (pointer:none), (pointer:coarse) {width: 60px; height: 60px; margin-right: 15px;}
+}
+
+#chat-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  margin-right: 10px;
+@media (pointer:none), (pointer:coarse) {font-size: 2em;}
+}
+
+/* ############ Chat messages ############## */
+.chat-info-message {
+  margin: 0 auto;
+  display: flex;
+  align-self: flex-start; /* n'occupe que la largeur/hauteur de son contenu */
+  height: auto;           /* s'adapte au contenu */
+  flex: 0 1 auto;         /* ne grandit pas pour remplir le parent */
+  flex-direction: column;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background-color: #2b2b2b;
+  color: #acacac;
+  max-width: 55%;
+  min-width: 0;
+  word-break: break-word;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  vertical-align: top;
+  @media (pointer:none), (pointer:coarse) {max-width: 85%;}
+}
+.chat-info-message.error {
+  color: #df3f3f;
+}
+.chat-info-message.warning {
+  color: #d8ca5d;
+}
+
+#chat-messages {
+  flex: 1 1 auto; /* occupe tout l'espace vertical restant */
+  padding: 15px;
+  background-color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 900px;      /* largeur max de la colonne de messages */
+  margin: 0 auto;        /* centre horizontalement */
+  width: 100%;           /* prend toute la largeur sur petits écrans */
+  box-sizing: border-box;
+  @media (pointer:none), (pointer:coarse) {
+      max-width: 100%;   /* sur mobile/tablette, prend toute la largeur */
+      padding: 30px;
+      height: 600px;
+  }
+}
+
+/* ######### Style of individual messages ######### */
+.message-time {
+  font-size: 0.8em;
+  color: #b1b1b1;
+  margin-left: auto;   /* Ajouté pour aligner à droite dans la bulle */
+}
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  max-width: 55%;
+  min-width: 0;
+  word-break: break-word;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  vertical-align: top;
+  @media (pointer:none), (pointer:coarse) {max-width: 85%;}
+}
+
+@media (pointer:none), (pointer:coarse) {
+.chat-message {
+  font-size: 1.5em;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  max-width: 85%;
+}
+}
+
+.chat-message p, .chat-info-message p {
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+.chat-message.received {
+  margin-right: auto;
+  background-color: #2b2b2b;
+  color: #fff;
+}
+
+.chat-message.sent {
+  margin-left: auto;
+  background-color: #1300a1;
+  color: #fff;
+}
+
+/* ############## Chat footer ############# */
+.chat-input-area {
+  display: flex;
+  padding: 10px 15px;
+  border-top: 1px solid #333;
+  background-color: #2b2b2b;
+
+  /* Pour que le footer prenne toute la largeur (et dépasse pas sur la droite)*/
+  box-sizing: border-box;    
+
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index : 200;      
+
+@media (pointer:none), (pointer:coarse) {padding: 20px 30px;}
+}
+.chat-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 1em;
+  box-sizing: border-box;
+  margin-right: 10px;
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+.chat-input:disabled {
+  background-color: #333;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.chat-input:focus {
+  outline: none;
+  background-color: #333;
+}
+.send-button {
+  background-color: #0054ff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.send-button:hover,
+.send-button:focus {
+  background-color: #0045d2;
+  outline: none;
+}
+@media (pointer:none), (pointer:coarse) {
+.chat-input {
+  font-size: 1.5em;
+  padding: 15px 20px;
+  margin-right: 15px;
+}
+.send-button {
+  font-size: 1.5em;
+  padding: 15px 25px;
+}
+}
+
+/* ############## Footer ############## */
+#footer {
+  background-color: #1f1f1f;
+  color: #888;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9em;
+  border-top: 1px solid #333;
+  margin-top: 1px;
+@media (pointer:none), (pointer:coarse) {font-size: 1.2em; padding: 20px 0; margin-top: 40px;}
+}
+#footer a {
+  color: #0054ff;
+  text-decoration: none;
+}
+#footer a:hover {
+  text-decoration: underline;
+}
+/* Fin du document */

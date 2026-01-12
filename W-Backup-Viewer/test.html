@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test du span masqué</title>
+  <style>
+    body {
+      font-family: Verdana, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    p {
+      margin: 1em 0;
+    }
+
+    /* Style du span masqué */
+    #about-content-to-hide1 {
+      display: inline;
+      /* Essayez l’un ou l’autre selon votre besoin : */
+      /* visibility: hidden;  garde la place */
+      /* display: none;       supprime complètement */
+    }
+
+    /* Bouton pour tester */
+    button {
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <p>
+    Whatsapp Backup Viewer is a free-of-use tool developped by GauGoth Corp. Through an easy handling interface, read your WhatsApp chat backups, private conversations or groups, inclu <span id="about-content-to-hide1">morceau-masqué au milieu du texte.</span>
+  </p>
+
+  <button onclick="toggleSpan()">Basculer l'affichage du span</button>
+
+  <script>
+    function toggleSpan() {
+      const span = document.getElementById('about-content-to-hide1');
+      if (span.style.display === 'none') {
+        span.style.display = 'inline';
+      } else {
+        span.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
