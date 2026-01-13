@@ -383,6 +383,21 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   color: #b1b1b1;
   margin-left: auto;   /* Ajouté pour aligner à droite dans la bulle */
 }
+
+.edited-indicator {
+  font-size: 0.8em;
+  color: #b1b1b1;
+  margin-left: 5px;   /* Espace entre le texte et l'indicateur */
+}
+
+.message-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px; /* Espace entre l'heure et l'indicateur d'édition */
+  margin-top: 5px;
+}
+
 .chat-message {
   display: flex;
   flex-direction: column;
@@ -421,6 +436,26 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   background-color: #1300a1;
   color: #fff;
 }
+
+/* Special styles for special message types */
+.chat-message.missingContent {
+  font-style: italic;
+  color: #b60000;
+}
+
+.chat-message.messageDeleted {
+  font-style: italic;
+  color: #888;
+}
+
+/* Icons inside messages */
+.chat-message .icon {
+  vertical-align: middle;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+
 
 /* ############## Chat footer ############# */
 .chat-input-area {

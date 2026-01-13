@@ -35,11 +35,16 @@ function isDate (date){
 function toLink(link) {
   //Partie adresse classique
   if (link.search("https://") === 0 || link.search("http://") === 0 || link.search("www.") === 0 || link.search("mailto:") === 0 || link.search("tel:") === 0) {
-    return `<a href=${link} target='_blank'>${link}</a>`
+    //Add https:// if missing
+    let prefix = "";
+    if (link.search("www.") === 0) {
+      prefix = "https://";
+    }
+    return `<a title=${link} href=${prefix}${link} target='_blank'>${link}</a>`
   }
   //Partie mail en clair
   if (link.split("@").length == 2 && link.split("@")[1].split(".").length == 2 && link.split("@")[1].split(".")[1] != "") { 
-    return `<a href=mailto:${link} target='_blank'>${link}</a>`
+    return `<a title=${link} href=mailto:${link} target='_blank'>${link}</a>`
   }
   //partie tel en clair
   //if (parseInt(link) &&  < parseInt(link) <  )
@@ -54,7 +59,7 @@ const newURL = new URL(window.location.href);
 const chatName = newURL.searchParams.get("chat");
 
 // Real path (real paths for test, in .gitignore)
-// == For tests with real conversations, much more data, varied content, true situations ==
+// == For tests with real conversations, much more data, varied content, true situations... ==
 let realPath = "";
 if (newURL.searchParams.get("real") == "true") {
   //let Path_conversationTest = "conversations/Test/WhatsApp Chat with Test.txt";
@@ -99,6 +104,7 @@ fetch(chatPath)
       let messageDateYear;
       let messageHour = "10:16";
       let messageContent;
+      let specialMessageClass = "";
       let messageSender;
       let messageTxt;
       let messageDeleted;
@@ -197,11 +203,79 @@ fetch(chatPath)
             }
           }
 
+          //Do not forget to re-initialize
+          specialMessageClass = "";
+          msgEdited = "";
+          svgIcon = "";
+
+          //<Media omitted>
+          if (messageTxt == " &lt;Media omitted&gt;") {
+            specialMessageClass += " missingContent";
+            messageTxt = "This message was not exported during the backup";
+            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <line x1="12" y1="8" x2="12" y2="12" />
+  <line x1="12" y1="16" x2="12.01" y2="16" />
+</svg>`;
+          
+          }
+
+          //<View once voice message omitted>
+          if (messageTxt == " &lt;View once voice message omitted&gt;") {
+            specialMessageClass += " messageDeleted";
+            messageTxt = "View once message opened";
+            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <line x1="12" y1="8" x2="12" y2="12" />
+  <line x1="12" y1="16" x2="12.01" y2="16" />
+</svg>`;
+          }
+
+          //<Video note omitted>
+          if (messageTxt == " &lt;Video note omitted&gt;") {
+            specialMessageClass += " missingContent";
+            messageTxt = "This video note was not exported during the backup";
+            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <line x1="12" y1="8" x2="12" y2="12" />
+  <line x1="12" y1="16" x2="12.01" y2="16" />
+</svg>`;
+          
+          }
+
+          //This message was deleted
+          if (messageTxt == " This message was deleted" || messageTxt == " You deleted this message") {
+            specialMessageClass += " messageDeleted";
+            messageTxt = "This message was deleted";
+            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-trash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <line x1="4" y1="7" x2="20" y2="7" />
+  <line x1="10" y1="11" x2="10" y2="17" />
+  <line x1="14" y1="11" x2="14" y2="17" />
+  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+</svg>`;
+
+          }
+
+          //<This message was edited>
+          if (messageTxt.endsWith(" &lt;This message was edited&gt;")) {
+            messageTxt = messageTxt.replace(" &lt;This message was edited&gt;","");
+            msgEdited = `<span class="edited-indicator">(edited)</span>`;
+          }
+
           messageModel = 
-`<div class="chat-message ${sender}">
-  <p>${messageTxt}</p>
-  <span class="message-time">${messageHour}</span>
+`<div class="chat-message ${sender}${specialMessageClass}">
+  <p>${svgIcon}${messageTxt}</p>
+  <span class="message-footer">
+    ${msgEdited}
+    <span class="message-time">${messageHour}</span>
+  </span>
 </div>\n`;
+
         }
         chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
       });
