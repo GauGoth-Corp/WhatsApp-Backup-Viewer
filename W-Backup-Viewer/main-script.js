@@ -246,8 +246,8 @@ fetch(chatPath)
           messageTxt = messageContent.split(": ")[1];
           //console.log(messageContent);
 
-          if(messageSender == "Gautier") sender = "sent";
-          else sender = "received";
+          if(messageSender == chatName) sender = "received";
+          else sender = "sent";
           //console.log(sender);
           
           //Checks if there is any link, then replace it by its href
