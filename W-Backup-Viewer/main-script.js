@@ -51,6 +51,23 @@ function toLink(link) {
   return null
 }
 
+/**
+ * Loads a SVG file and returns its content as a string
+ * @param {string} path path to the SVG file
+ * @returns {Promise<string>} Promise resolving to the SVG content as a string
+ */
+function loadSVG(path) {
+  return fetch(path)
+    .then(response => {
+      if (!response.ok) throw new Error('Erreur réseau : ' + response.status);
+      console.log("Fetched icon SVG");
+      return response.text();
+    })
+    .catch(error => {
+      console.error('Error loading icon SVG:', error);
+      return null;
+    });
+}
 
 
 
@@ -113,8 +130,24 @@ fetch(chatPath)
       let sender = "sent";
       let messageModel;
       let previousMessage;
+      let svgWarningIcon = `<img class="icon missing-media-icon" src="datas/warning-icon.svg" alt="Warning icon">`;
+      let svgTrashIcon = `<img class="icon deleted-message-icon" src="datas/trash-icon.svg" alt="Trash icon">`;
+      let msgEdited = "";
+      let svgIcon = "";
 
-      listMessages.forEach(msg => {
+      // Loads SVG icons source code so we can style them with CSS (e.g. change color with stroke="currentColor")
+      const imgWarningFallback = `<img class="icon missing-media-icon" src="datas/warning-icon.svg" alt="Warning icon">`;
+      const imgTrashFallback = `<img class="icon deleted-message-icon" src="datas/trash-icon.svg" alt="Trash icon">`;
+
+      Promise.all([
+        loadSVG("datas/warning-icon.svg"),
+        loadSVG("datas/trash-icon.svg")
+      ]).then(([warningContent, trashContent]) => {
+        svgWarningIcon = warningContent || imgWarningFallback;
+        svgTrashIcon = trashContent || imgTrashFallback;
+
+        // Parcourt tous les messages
+        listMessages.forEach(msg => {
         //console.log("HELLO MOTHER FUCKER");
         //console.log(Array.from(document.querySelectorAll(".chat-message")).at(-1).children[0].innerHTML);
 
@@ -188,7 +221,7 @@ fetch(chatPath)
           
           //Checks if there is any link, then replace it by its href
           let messageElements = messageTxt.split(" ");
-          console.log(messageElements);
+          //console.log(messageElements);
           messageTxt = "";
           //console.log("hello");
           for (let i=0; i < messageElements.length; i++) {
@@ -212,12 +245,7 @@ fetch(chatPath)
           if (messageTxt == " &lt;Media omitted&gt;") {
             specialMessageClass += " missingContent";
             messageTxt = "This message was not exported during the backup";
-            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <circle cx="12" cy="12" r="9" />
-  <line x1="12" y1="8" x2="12" y2="12" />
-  <line x1="12" y1="16" x2="12.01" y2="16" />
-</svg>`;
+            svgIcon = svgWarningIcon;
           
           }
 
@@ -225,24 +253,14 @@ fetch(chatPath)
           if (messageTxt == " &lt;View once voice message omitted&gt;") {
             specialMessageClass += " messageDeleted";
             messageTxt = "View once message opened";
-            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <circle cx="12" cy="12" r="9" />
-  <line x1="12" y1="8" x2="12" y2="12" />
-  <line x1="12" y1="16" x2="12.01" y2="16" />
-</svg>`;
+            svgIcon = svgWarningIcon;
           }
 
           //<Video note omitted>
           if (messageTxt == " &lt;Video note omitted&gt;") {
             specialMessageClass += " missingContent";
             messageTxt = "This video note was not exported during the backup";
-            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-alert-circle" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <circle cx="12" cy="12" r="9" />
-  <line x1="12" y1="8" x2="12" y2="12" />
-  <line x1="12" y1="16" x2="12.01" y2="16" />
-</svg>`;
+            svgIcon = svgWarningIcon;
           
           }
 
@@ -250,14 +268,7 @@ fetch(chatPath)
           if (messageTxt == " This message was deleted" || messageTxt == " You deleted this message") {
             specialMessageClass += " messageDeleted";
             messageTxt = "This message was deleted";
-            svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-trash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <line x1="4" y1="7" x2="20" y2="7" />
-  <line x1="10" y1="11" x2="10" y2="17" />
-  <line x1="14" y1="11" x2="14" y2="17" />
-  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-</svg>`;
+            svgIcon = svgTrashIcon;
 
           }
 
@@ -280,6 +291,9 @@ fetch(chatPath)
         chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
       });
       //chatMessagesElement.insertAdjacentHTML('afterbegin', "<p>" +formatConv +"</p>");
+
+      //End of ".then(([warningContent, trashContent]) => {"
+      });
     }
 
     if (document.readyState === "loading") {//Attend la fin du chargement, si celui-ci est en cours
