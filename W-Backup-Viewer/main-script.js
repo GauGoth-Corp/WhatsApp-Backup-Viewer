@@ -70,6 +70,37 @@ function loadSVG(path) {
 }
 
 
+function scrollFunction() {
+  const scrollTopBtn = document.getElementById("scrollToTopBtn");
+
+    //Montre le bouton Top quand la vue est à plus de 600px du haut
+    if (window.scrollY > 600 || document.documentElement.scrollTop > 600) {
+        scrollTopBtn.style.display = "block";
+    } else {
+        scrollTopBtn.style.display = "none";
+    }
+
+    //Pour le bouton Bottom
+    const scrollBottomBtn = document.getElementById("scrollToBottomBtn");
+    //Montre le bouton Bottom quand la vue est à moins de 600px du bas
+    if (document.documentElement.scrollHeight - window.scrollY - window.innerHeight > 600) {
+        scrollBottomBtn.style.display = "block";
+    } else {
+        scrollBottomBtn.style.display = "none";
+    }
+}
+
+//Appel de la fonction scrollFunction à chaque fois qu'on scroll
+window.onscroll = function() {scrollFunction()};
+
+// Remonte en haut en "smooth" 
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
 
 //################# CODE ##############
 const newURL = new URL(window.location.href);
@@ -290,11 +321,23 @@ fetch(chatPath)
         }
         chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
       });
+
+      //Scrolls to bottom when loaded
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+        console.log("Scrolled to bottom. scrollHeight:", document.body.scrollHeight);
+      }, 0);
+
+      //Makes the scroll buttons appear/disappear on load
+      scrollFunction();
+
+      console.log("Chat loaded.");
+
       //chatMessagesElement.insertAdjacentHTML('afterbegin', "<p>" +formatConv +"</p>");
 
       //End of ".then(([warningContent, trashContent]) => {"
       });
-    }
+    } //End of RunAfterLoaded()
 
     if (document.readyState === "loading") {//Attend la fin du chargement, si celui-ci est en cours
       document.addEventListener("DOMContentLoaded", () => {
@@ -322,5 +365,6 @@ fetch(chatPath)
         document.getElementById('chat-messages').innerHTML = '<p>'+messageModel+'</p>';
 
     });
+    
   });
 

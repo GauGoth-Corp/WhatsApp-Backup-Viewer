@@ -3,31 +3,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* Note importante : on remarque que la totalité de la version du code "responsive" CSS est gérée 
-par la détection du type de "pointer".
-("@media (pointer:none), (pointer:coarse) { ... }")
-
-Il en existe 3 types détectables :
-- none
-Le mécanisme de saisie principal n'inclut pas de dispositif de pointage. 
-(exemple : assistant vocal)
-- coarse
-Le mécanisme de saisie principal inclut un dispositif de pointage dont la précision est limitée.
-(exemple : appareil mobile à écran tactile)
-- fine
-Le mécanisme de saisie principal inclut un dispositif de pointage précis.
-(exemple : ordinateur doté d'une souris)
-
-Il s'agit donc d'une ruse pour détecter un écran tactile. 
-Par ailleurs, un écran d'ordinateur tactile ne sera pas compté comme "mobile" car toujours doté d'une souris
-("mécanisme de saisie principal").
-
-Cette méthode est préférable à la détection de la largeur de l'écran ("@media (max-width: 768px) { ... }") : 
-après des tests, on aura remarqué que que celle-ci ne marche pas correctement, 
-surtout que de nombreux appareils mobiles ont en réalité une meilleure résolution qu'un écran d'ordinateur (smartphones compris !).
-Exemple : Galaxy A13 (test sur navigateur Chrome) : 980 x 1928 (portrait) ; 980 x 332 (paysage)
-*/
-
 /*######################### Principaux éléments ##########################*/
 /*RESPONSIVE*/
 /*<meta name="viewport" content="width=device-width, initial-scale=1">*/
@@ -45,7 +20,6 @@ body {
   margin: 0;
   padding: 0;
   color: #d8d8d8;
-  @media (pointer:none), (pointer:coarse) {font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;}
 
 }
 
@@ -61,19 +35,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol {
   font-family: Verdana, Arial, Helvetica, sans-serif;
 
 }
-@media (pointer:none), (pointer:coarse) {
-h1 {
-  font: bold 150%/1.4 Verdana, Arial, Helvetica, sans-serif;
-}
-h2, h3, h4, h5, h6 {
-  font: bold 130%/1.4 Verdana, Arial, Helvetica, sans-serif;
-}
 
-p {
-  font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-}
-
-}
 
 a img { /* ce sélecteur élimine la bordure bleue par défaut affichée dans certains navigateurs autour d'une image lorsque celle-ci est entourée d'un lien. */
   border: none;
@@ -105,7 +67,6 @@ a:hover, a:active, a:focus { /* ce groupe de sélecteurs offrira à un navigateu
   /*min-width: 780px;*/ /* une valeur « min-width » peut s'avérer utile pour éviter que cette mise en page ne soit trop étroite. La longueur de ligne est ainsi plus lisible dans les colonnes latérales. IE6 ne tient pas compte de cette déclaration. */
   background-color: #1f1f1f;
   margin: 0 auto; /* la valeur automatique sur les côtés, associée à la largeur, permet de centrer la mise en page. Elle n'est pas nécessaire si vous fixez la largeur du conteneur à 100%. */
-  @media (pointer:none), (pointer:coarse) {width: 0%; max-width: 100%; min-width: 100%;} /* pour les écrans tactiles, la largeur du conteneur est fixée à 100% pour occuper toute la largeur de l'écran. */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -124,7 +85,6 @@ a:hover, a:active, a:focus { /* ce groupe de sélecteurs offrira à un navigateu
   font: italic 120%/1.4 Verdana, Arial, Helvetica, sans-serif;
   color: #b0b0b0;
   margin-bottom: 10px;
-@media (pointer:none), (pointer:coarse) {font: italic 100%/1.4 Verdana, Arial, Helvetica, sans-serif; margin-bottom: 20px;}
 }
 
 .box {
@@ -132,7 +92,7 @@ a:hover, a:active, a:focus { /* ce groupe de sélecteurs offrira à un navigateu
   border: 1px solid #444;
   margin: 10px 0;
   padding: 10px 15px;
-@media (pointer:none), (pointer:coarse) {margin: 20px 0; padding: 20px 30px;}
+@media (max-width: 768px) {margin: 20px 0; padding: 20px 30px;}
 }
 .box-icon {
   width: 32px;
@@ -247,24 +207,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   align-self: flex-start;
 }
 
-/* Responsive pour écrans tactiles */
-@media (pointer:none), (pointer:coarse) {
-.chat-item {
-  padding: 28px 22px;
-  font-size: 1.5em;
-}
-.chat-avatar {
-  width: 72px;
-  height: 72px;
-  margin-right: 24px;
-}
-.chat-name {
-  font-size: 1.3em;
-}
-.chat-date {
-  font-size: 1.1em;
-}
-}
+
 
 /* ########################################### */
 /* ############## Style du chat ############## */
@@ -289,7 +232,6 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   width: 100%;
   z-index : 200;      
 
-@media (pointer:none), (pointer:coarse) {padding: 20px 30px;}
 }
 .back-button {
   background: none;
@@ -302,7 +244,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
   margin-right: 10px; /* espace à droite du bouton */
-@media (pointer:none), (pointer:coarse) {font-size: 1.5em; padding: 10px 15px;}
+  @media (max-width: 768px) {margin-right: 2px;}
 }
 .back-button:hover,
 .back-button:focus {
@@ -320,7 +262,8 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin-right: 10px;
   border: 2px solid #444;
   background: #444;
-@media (pointer:none), (pointer:coarse) {width: 60px; height: 60px; margin-right: 15px;}
+  @media (max-width: 768px) {margin-right: 0; width: 35px; height: 35px;}
+
 }
 
 #chat-title {
@@ -328,7 +271,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   font-weight: bold;
   color: #fff;
   margin-right: 10px;
-@media (pointer:none), (pointer:coarse) {font-size: 2em;}
+@media (max-width: 768px) {font-size: 1.3em; margin-right: 0px;}
 }
 
 /* ############ Chat messages ############## */
@@ -350,7 +293,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   word-break: break-word;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   vertical-align: top;
-  @media (pointer:none), (pointer:coarse) {max-width: 85%;}
+  @media (max-width: 768px) {max-width: 100%;}
 }
 .chat-info-message.error {
   color: #df3f3f;
@@ -370,11 +313,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin: 0 auto;        /* centre horizontalement */
   width: 100%;           /* prend toute la largeur sur petits écrans */
   box-sizing: border-box;
-  @media (pointer:none), (pointer:coarse) {
-      max-width: 100%;   /* sur mobile/tablette, prend toute la largeur */
-      padding: 30px;
-      height: 600px;
-  }
+
 }
 
 /* ######### Style of individual messages ######### */
@@ -409,17 +348,10 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   word-break: break-word;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   vertical-align: top;
-  @media (pointer:none), (pointer:coarse) {max-width: 85%;}
+  @media (max-width: 768px) {max-width: 80%;}
 }
 
-@media (pointer:none), (pointer:coarse) {
-.chat-message {
-  font-size: 1.5em;
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  max-width: 85%;
-}
-}
+
 
 .chat-message p, .chat-info-message p {
   margin: 0 0 5px 0;
@@ -472,7 +404,6 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   width: 100%;
   z-index : 200;      
 
-@media (pointer:none), (pointer:coarse) {padding: 20px 30px;}
 }
 .chat-input {
   flex: 1;
@@ -511,17 +442,7 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   background-color: #0045d2;
   outline: none;
 }
-@media (pointer:none), (pointer:coarse) {
-.chat-input {
-  font-size: 1.5em;
-  padding: 15px 20px;
-  margin-right: 15px;
-}
-.send-button {
-  font-size: 1.5em;
-  padding: 15px 25px;
-}
-}
+
 
 /* ############## Footer ############## */
 #footer {
@@ -532,7 +453,6 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   font-size: 0.9em;
   border-top: 1px solid #333;
   margin-top: 1px;
-@media (pointer:none), (pointer:coarse) {font-size: 1.2em; padding: 20px 0; margin-top: 40px;}
 }
 #footer a {
   color: #0054ff;
@@ -541,4 +461,55 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 #footer a:hover {
   text-decoration: underline;
 }
+
+
+/*####################### Bouton "Back to top" #########################*/
+#scrollToTopBtn, #scrollToBottomBtn {
+  position: fixed;
+  right: 10px;
+  z-index: 1000;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #0054ff;
+  color: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  padding: 5px;
+
+  display: none; /* Caché par défaut */
+}
+
+#scrollToTopBtn {
+  bottom: 136px; /* Positionné au-dessus du bouton de défilement vers le bas */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  @media (max-width: 768px) {bottom: 140px;}
+}
+#scrollToBottomBtn {
+  bottom: 80px;
+  padding-bottom: 0;
+  @media (max-width: 768px) {bottom: 90px;}
+}
+
+
+#scrollToTopBtn:hover, #scrollToBottomBtn:hover {
+  background-color: #0045d2;
+}
+
+#scrollToTopBtn:active, #scrollToTopBtn:focus, #scrollToBottomBtn:active, #scrollToBottomBtn:focus {
+
+  background-color: #0031a1;
+}
+
+.icon-scroll-size {
+  width:30px;
+  height: 30px;
+}
+
+#scrollToBottomBtn .icon-scroll-size {
+  transform: rotate(180deg); /* Faire pivoter l'icône pour indiquer le bas */
+}
+
 /* Fin du document */
