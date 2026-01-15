@@ -1,34 +1,34 @@
 11/14/22, 10:49 - Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more.
-11/14/22, 10:49 - Môa: Salut Test, comment ça va ?
-11/14/22, 10:50 - Môa: Trql et toi
+11/14/22, 10:49 - Test-no-error: Salut Test, comment ça va ?
+11/14/22, 10:50 - Test: Trql et toi
 11/15/22, 12:31 - Test: This message was deleted
 11/15/22, 12:36 - Test: <Media omitted>
 11/15/22, 12:38 - Test: <Media omitted>
-11/15/22, 13:12 - Môa: J'écouterai plus tard tes vocaux dsl, j arrive pas à les télécharger à cause du wifi de *****
+11/15/22, 13:12 - Test-no-error: J'écouterai plus tard tes vocaux dsl, j arrive pas à les télécharger à cause du wifi de *****
 11/15/22, 13:16 - Test: tkt
-11/15/22, 17:40 - Môa: Ah c pas cool ça
-11/15/22, 17:41 - Môa: Mais y a pas moyen que tu te taises nanmého ??
+11/15/22, 17:40 - Test-no-error: Ah c pas cool ça
+11/15/22, 17:41 - Test-no-error: Mais y a pas moyen que tu te taises nanmého ??
 11/15/22, 17:41 - Test: Bonne question
 11/15/22, 17:41 - Test: j'y vais mama
-11/15/22, 17:41 - Môa: Regarde bien
-11/15/22, 17:42 - Môa: You deleted this message
+11/15/22, 17:41 - Test-no-error: Regarde bien
+11/15/22, 17:42 - Test-no-error: You deleted this message
 11/15/22, 17:42 - Test: This message was deleted
-11/15/22, 17:42 - Môa: C quoi ton pb ?
+11/15/22, 17:42 - Test-no-error: C quoi ton pb ?
 11/15/22, 17:42 - Test: AHHHH nonnnn
-11/15/22, 17:44 - Môa: Alors jsp pas du tt
-11/15/22, 17:44 - Môa: <Media omitted>
+11/15/22, 17:44 - Test-no-error: Alors jsp pas du tt
+11/15/22, 17:44 - Test-no-error: <Media omitted>
 11/15/22, 17:45 - Test: oui je vais voir
-11/15/22, 17:45 - Môa: 👍🏻
-11/15/22, 17:50 - Môa: <Media omitted>
-11/15/22, 17:50 - Môa: <Media omitted>
+11/15/22, 17:45 - Test-no-error: 👍🏻
+11/15/22, 17:50 - Test-no-error: <Media omitted>
+11/15/22, 17:50 - Test-no-error: <Media omitted>
 11/15/22, 17:51 - Test: nn je connais personne mais vsy c pas grv
-11/16/22, 06:51 - Môa: Voici une adresse mail que tu peux contacter pour des réparations pas chères 
-11/16/22, 06:51 - Môa: reparations.pas.cheres@gmail.com
-11/16/22, 06:52 - Môa: Et voici le site officiel
+11/16/22, 06:51 - Test-no-error: Voici une adresse mail que tu peux contacter pour des réparations pas chères 
+11/16/22, 06:51 - Test-no-error: reparations.pas.cheres@gmail.com
+11/16/22, 06:52 - Test-no-error: Et voici le site officiel
 
 www.reparations-pas-cheres.fr
-14/16/22, 06:52 - Môa: www.reparations-pas-cheres.fr
-11/16/22, 06:53 - Môa: Alors en fait je vais déjà te raconter une aventure extraordinaire que j'ai vécue récemment. C'était un jour d'hiver, et la neige tombait à flots. J'ai décidé d'aller faire du ski avec des amis dans les montagnes. L'excitation était à son comble !
+14/16/22, 06:52 - Test-no-error: www.reparations-pas-cheres.fr
+11/16/22, 06:53 - Test-no-error: Alors en fait je vais déjà te raconter une aventure extraordinaire que j'ai vécue récemment. C'était un jour d'hiver, et la neige tombait à flots. J'ai décidé d'aller faire du ski avec des amis dans les montagnes. L'excitation était à son comble !
 Nous avons pris les remontées mécaniques et sommes montés jusqu'au sommet de la montagne. La vue était à couper le souffle, avec des paysages enneigés à perte de vue. Nous avons commencé à dévaler les pistes, ressentant la fraîcheur de l'air et la vitesse sous nos skis.
 Tout se passait à merveille jusqu'à ce que l'un de mes amis perde le contrôle et fasse une chute spectaculaire. Heureusement, il n'a pas été gravement blessé, mais cela nous a tous un peu secoués. Nous avons décidé de faire une pause pour nous remettre de nos émotions.
 Après cette pause, nous avons repris le ski avec encore plus de prudence. Nous avons exploré différentes pistes, certaines plus difficiles que d'autres, mais toujours avec le sourire aux lèvres. La sensation de glisser sur la neige fraîche était tout simplement incroyable.
@@ -50,11 +50,10 @@ riflced -é&pç_y)&é12938àé&)~#@]~#^
 @moi
 17/16/22, 06:54 - Test: [VIDE]
 17/16/22, 06:54 - Test: <Media omitted>
-11/16/22, 06:55 - Môa: 😂😂😂
-11/16/22, 06:55 - Môa: Roflced -é&pç_y)&é12938àé&)~#@]~#^
-11/16/22, 06:55 - Môa: <Media omitted>
-11/16/22, 06:56 - Môa: <View once voice message omitted>
+11/16/22, 06:55 - Test-no-error: 😂😂😂
+11/16/22, 06:55 - Test-no-error: Roflced -é&pç_y)&é12938àé&)~#@]~#^
+11/16/22, 06:55 - Test-no-error: <Media omitted>
+11/16/22, 06:56 - Test-no-error: <View once voice message omitted>
 11/16/22, 06:57 - Test: Jpp 😂 c bcp trop drôle
-11/16/22, 06:57 - Môa: Mdrrr kéçekonçamûse <This message was edited>
+11/16/22, 06:57 - Test-no-error: Mdrrr kéçekonçamûse <This message was edited>
 11/16/22, 06:58 - Test: Je sais pas trop 😂
-11/16/22, 06:58 - Môa: - TEST démoniaque

@@ -216,12 +216,12 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 /* ############ Chat header ############## */
 .chat-header {
   background-color: #2b2b2b;
-  padding: 10px 15px;
+  padding: 5px 10px;
   border-bottom: 2px solid #4a4a4a;
   display: flex;
   align-items: center;
   justify-content: flex-start; /* <-- alignement à gauche */
-  gap: 15px; /* espace entre les éléments */
+  gap: 5px; /* espace entre les éléments */
 
   /* Pour que le header prenne toute la largeur (et dépasse pas sur la droite)*/
   box-sizing: border-box;    
@@ -230,21 +230,24 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   width: 100%;
-  z-index : 200;      
+  z-index : 200;    
+  
+  @media (max-width: 768px) {padding: 5px 5px;}
 
 }
 .back-button {
   background: none;
   border: none;
   color: #0054ff;
-  font-size: 1em;
+  font-size: 1.5em;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 2px 2px;
   border-radius: 5px;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
-  margin-right: 10px; /* espace à droite du bouton */
-  @media (max-width: 768px) {margin-right: 2px;}
+
+
+  @media (max-width: 768px) {margin-right: 0;}
 }
 .back-button:hover,
 .back-button:focus {
@@ -254,24 +257,30 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 .chat-avatar-inner {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   padding: 5px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 10px;
   border: 2px solid #444;
   background: #444;
-  @media (max-width: 768px) {margin-right: 0; width: 35px; height: 35px;}
+  @media (max-width: 768px) {width: 20px; height: 20px;}
 
 }
 
 #chat-title {
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: bold;
   color: #fff;
-  margin-right: 10px;
-@media (max-width: 768px) {font-size: 1.3em; margin-right: 0px;}
+  padding: 0;
+  margin: 0;
+  align-self: center;
+
+  /* Long texte tronqué avec des points de suspension */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+@media (max-width: 768px) {font-size: 1em;}
 }
 
 /* ############ Chat messages ############## */

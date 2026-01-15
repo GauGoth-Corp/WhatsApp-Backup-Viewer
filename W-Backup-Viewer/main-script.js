@@ -283,7 +283,14 @@ fetch(chatPath)
           //<View once voice message omitted>
           if (messageTxt == " &lt;View once voice message omitted&gt;") {
             specialMessageClass += " messageDeleted";
-            messageTxt = "View once message opened";
+            messageTxt = "View once voice message opened";
+            svgIcon = svgWarningIcon;
+          }
+
+          //Blank message - we consider it is a view once media opened
+          if (messageTxt == " ") {
+            specialMessageClass += " messageDeleted";
+            messageTxt = "View once media opened";
             svgIcon = svgWarningIcon;
           }
 
