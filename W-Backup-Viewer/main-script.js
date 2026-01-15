@@ -137,7 +137,20 @@ fetch(chatPath)
     formatConv = formatConv.replaceAll("'", "&#39;");
     formatConv = formatConv.replaceAll("\r\n", "\n");
     formatConv = formatConv.replaceAll("\r", "\n");
-    listMessages = formatConv.split('\n');
+
+
+    //let listMessages = formatConv.split('\n');
+
+    //Sépare les messages en utilisant la date comme séparateur (régex). Le "\n" étant trop léger (retour chariot dans un message)
+    //Les parenthèses permettent de ne pas perdre le séparateur (la date) lors du split
+    let listMessages = formatConv.split(/(\d{1,2}\/\d{1,2}\/\d{2,4}, \d{1,2}:\d{2} - )/);
+    //Enlève le 1er élément vide
+    if (listMessages[0] === "") {
+      listMessages.shift();
+    }
+
+    //console.log(listMessages);
+
 
     function RunAfterLoaded() {
       //Enlève le message "chat empty"
@@ -177,22 +190,20 @@ fetch(chatPath)
         svgWarningIcon = warningContent || imgWarningFallback;
         svgTrashIcon = trashContent || imgTrashFallback;
 
-        // Parcourt tous les messages
-        listMessages.forEach(msg => {
-        //console.log("HELLO MOTHER FUCKER");
-        //console.log(Array.from(document.querySelectorAll(".chat-message")).at(-1).children[0].innerHTML);
+        // Parcourt tous les messages (groupés 2 par 2 : date + (content : ?auteur + message))
+        for (let i = 0; i < listMessages.length; i += 2) {
+          //console.log("HELLO MOTHER FUCKER");
+          //console.log(Array.from(document.querySelectorAll(".chat-message")).at(-1).children[0].innerHTML);
 
-        messageHeader = msg.split(" - ")[0];
-        //console.log(messageHeader);
-        messageContent = msg.split(" - ")[1];
-        //console.log(messageContent);
+          messageHeader = listMessages[i] .trim();
+          messageContent = listMessages[i + 1] .trim();
+          //console.log(messageHeader);
+          //console.log(messageContent);
 
-        previousMessageDate = messageDate;
+          previousMessageDate = messageDate;
 
-        //Vérifie si le "msg" commence par une date : si non, ça veut dire que c'est simplement un retour chariot dans un message
-        messageDate = messageHeader.split(", ")[0];
-        //console.log(messageDate);
-        if (isDate(messageDate)) {
+          messageDate = messageHeader.split(", ")[0];
+          //console.log(messageDate);
           let oneNumberDay, oneNumberMonth;
           //console.log("Début message");
           messageDateDay = messageDate.split("/")[1];
@@ -201,133 +212,127 @@ fetch(chatPath)
           if (parseInt(messageDateMonth) < 10) { oneNumberMonth = "0";} else { oneNumberMonth = "";}
           messageDateYear = messageDate.split("/")[2];
           messageDate = oneNumberDay+messageDateDay + "/" + oneNumberMonth+messageDateMonth + "/20" + messageDateYear;
-          messageHour = messageHeader.split(", ")[1];
-          //console.log(messageHour);          
-        }
-        else {
-          //console.log("Insertion suite message précédent")
-          //Si on a un retour à la ligne dans un message, on insère directement le txt dans le p du message (donc itération précédente)
-          previousMessage = Array.from(document.querySelectorAll(".chat-message")).at(-1).children[0];
+          messageHour = messageHeader.split(", ")[1].split(" -")[0];
+          //console.log(messageHour);
 
-          previousMessage.insertAdjacentHTML('beforeend', "\n<br>\n"+msg);
-          //Skip le reste des étapes
-          return;
-        }
-
-
-        if (messageContent == "Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more.") {
-          //console.log("Info");
-          messageModel = 
-`<div class="chat-info-message warning">
-  <p>${messageContent}</p>
-</div>\n`;
-          messageDate = previousMessageDate; //Sinon skip la date pour le premier message (tjs après l'annonce "encrypted")
-        }
-        else if (messageContent == chatName+" is a contact") {
-          messageModel = 
-`<div class="chat-info-message">
-  <p>${messageContent}</p>
-</div>\n`;
-          messageDate = previousMessageDate;          
-        }
-        else {
-
-          //Affiche la date pour chaque nouveau jour
-          if (messageDate != previousMessageDate) {
+          if (messageContent == "Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more.") {
+            //console.log("Info");
             messageModel = 
-`<div class="chat-info-message">
-  <p>${messageDate}</p>
-</div>\n`;
+  `<div class="chat-info-message warning">
+    <p>${messageContent}</p>
+  </div>\n`;
+            messageDate = previousMessageDate; //Sinon skip la date pour le premier message (tjs après l'annonce "encrypted")
+          }
+          else if (messageContent == chatName+" is a contact") {
+            messageModel = 
+  `<div class="chat-info-message">
+    <p>${messageContent}</p>
+  </div>\n`;
+            messageDate = previousMessageDate;          
+          }
+          else {
+
+            //Affiche la date pour chaque nouveau jour
+            if (messageDate != previousMessageDate) {
+              messageModel = 
+  `<div class="chat-info-message">
+    <p>${messageDate}</p>
+  </div>\n`;
+            chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
+            }
+
+            messageSender = messageContent.split(":")[0];
+            //console.log(messageSender);
+
+            //Récupère tout ce qui est après le ": " (si il y a encore des ': ', on garde tout)
+            messageTxt = messageContent.split(": ").slice(1).join(": ");
+            //console.log(messageTxt);
+
+            //Replaces "\n" by <br> to keep paragraphs
+            messageTxt = messageTxt.replaceAll("\n", "<br>");
+
+
+            //console.log(`Msg n°${(i/2)+1} - ${messageSender}: ${messageTxt}`);
+            //console.log(messageContent.split(":"))
+            if(messageSender == chatName) sender = "received";
+            else sender = "sent";
+            //console.log(sender);
+            
+            //Checks if there is any link, then replaces it by its href
+            let messageElements = messageTxt.split(" ").flatMap(e => e.split("<br>"));
+            //console.log(messageElements);
+            //console.log("hello");
+            for (let j=0; j < messageElements.length; j++) {
+              //console.log("Ca tourne");
+              isLink = toLink(messageElements[j]);
+              if (isLink) {
+                console.log("Link found: ", messageElements[j]);
+                //Replaces now the link found by its HTML version (with the .replace method: we don't know if the separator was a space or a <br>)
+                messageTxt = messageTxt.replace(messageElements[j], isLink);
+              }
+            }
+
+            //Do not forget to re-initialize
+            specialMessageClass = "";
+            msgEdited = "";
+            svgIcon = "";
+
+            //<Media omitted>
+            if (messageTxt == "&lt;Media omitted&gt;") {
+              specialMessageClass += " missingContent";
+              messageTxt = "This message was not exported during the backup";
+              svgIcon = svgWarningIcon;
+            
+            }
+
+            //<View once voice message omitted>
+            if (messageTxt == "&lt;View once voice message omitted&gt;") {
+              specialMessageClass += " messageDeleted";
+              messageTxt = "View once voice message opened";
+              svgIcon = svgWarningIcon;
+            }
+
+            //Blank message - we consider it is a view once media opened
+            if (messageTxt == "") {
+              specialMessageClass += " messageDeleted";
+              messageTxt = "View once media opened";
+              svgIcon = svgWarningIcon;
+            }
+
+            //<Video note omitted>
+            if (messageTxt == "&lt;Video note omitted&gt;") {
+              specialMessageClass += " missingContent";
+              messageTxt = "This video note was not exported during the backup";
+              svgIcon = svgWarningIcon;
+            
+            }
+
+            //This message was deleted
+            if (messageTxt == "This message was deleted" || messageTxt == "You deleted this message") {
+              specialMessageClass += " messageDeleted";
+              messageTxt = "This message was deleted";
+              svgIcon = svgTrashIcon;
+
+            }
+
+            //<This message was edited>
+            if (messageTxt.endsWith("&lt;This message was edited&gt;")) {
+              messageTxt = messageTxt.replace("&lt;This message was edited&gt;","");
+              msgEdited = `<span class="edited-indicator">(edited)</span>`;
+            }
+
+            messageModel = 
+  `<div id="msg${(i/2)+1}" class="chat-message ${sender}${specialMessageClass}">
+    <p>${svgIcon}${messageTxt}</p>
+    <span class="message-footer">
+      ${msgEdited}
+      <span class="message-time">${messageHour}</span>
+    </span>
+  </div>\n`;
+
+          }
           chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
-          }
-
-          messageSender = messageContent.split(": ")[0];
-          //console.log(messageSender);
-          messageTxt = messageContent.split(": ")[1];
-          //console.log(messageContent);
-
-          if(messageSender == chatName) sender = "received";
-          else sender = "sent";
-          //console.log(sender);
-          
-          //Checks if there is any link, then replace it by its href
-          let messageElements = messageTxt.split(" ");
-          //console.log(messageElements);
-          messageTxt = "";
-          //console.log("hello");
-          for (let i=0; i < messageElements.length; i++) {
-            //console.log("Ca tourne");
-            if (toLink(messageElements[i])) {
-              messageTxt = messageTxt+" "+toLink(messageElements[i]);
-              //console.log("Link");
-            }
-            else {
-              messageTxt = messageTxt + " "+messageElements[i];
-              //console.log("Pas link");
-            }
-          }
-
-          //Do not forget to re-initialize
-          specialMessageClass = "";
-          msgEdited = "";
-          svgIcon = "";
-
-          //<Media omitted>
-          if (messageTxt == " &lt;Media omitted&gt;") {
-            specialMessageClass += " missingContent";
-            messageTxt = "This message was not exported during the backup";
-            svgIcon = svgWarningIcon;
-          
-          }
-
-          //<View once voice message omitted>
-          if (messageTxt == " &lt;View once voice message omitted&gt;") {
-            specialMessageClass += " messageDeleted";
-            messageTxt = "View once voice message opened";
-            svgIcon = svgWarningIcon;
-          }
-
-          //Blank message - we consider it is a view once media opened
-          if (messageTxt == " ") {
-            specialMessageClass += " messageDeleted";
-            messageTxt = "View once media opened";
-            svgIcon = svgWarningIcon;
-          }
-
-          //<Video note omitted>
-          if (messageTxt == " &lt;Video note omitted&gt;") {
-            specialMessageClass += " missingContent";
-            messageTxt = "This video note was not exported during the backup";
-            svgIcon = svgWarningIcon;
-          
-          }
-
-          //This message was deleted
-          if (messageTxt == " This message was deleted" || messageTxt == " You deleted this message") {
-            specialMessageClass += " messageDeleted";
-            messageTxt = "This message was deleted";
-            svgIcon = svgTrashIcon;
-
-          }
-
-          //<This message was edited>
-          if (messageTxt.endsWith(" &lt;This message was edited&gt;")) {
-            messageTxt = messageTxt.replace(" &lt;This message was edited&gt;","");
-            msgEdited = `<span class="edited-indicator">(edited)</span>`;
-          }
-
-          messageModel = 
-`<div class="chat-message ${sender}${specialMessageClass}">
-  <p>${svgIcon}${messageTxt}</p>
-  <span class="message-footer">
-    ${msgEdited}
-    <span class="message-time">${messageHour}</span>
-  </span>
-</div>\n`;
-
-        }
-        chatMessagesElement.insertAdjacentHTML('beforeend', messageModel);
-      });
+        } //End of for loop
 
       //Scrolls to bottom when loaded
       setTimeout(() => {
