@@ -40,13 +40,13 @@ function toLink(link) {
     if (link.search("www.") === 0) {
       prefix = "https://";
     }
-    return `<a title=${link} href=${prefix}${link} target='_blank'>${link}</a>`
+    return `<a title="PLEASE NOTE: We cannot be held responsible for content displayed on external websites." href=${prefix}${link} target='_blank'>${link}</a>`
   }
   //Partie mail en clair
   if (link.split("@").length == 2 && link.split("@")[1].split(".").length == 2 && link.split("@")[1].split(".")[1] != "") { 
     return `<a title=${link} href=mailto:${link} target='_blank'>${link}</a>`
   }
-  //partie tel en clair
+  //partie tel en clair - abandonné pour l'instant car détection hasardeuse (c'est le cas sur WhatsApp d'ailleurs, et c'est assez perturbant)
   //if (parseInt(link) &&  < parseInt(link) <  )
   return null
 }
@@ -100,6 +100,71 @@ function scrollToTop() {
 
 function scrollToBottom() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+//################ WhatsApp formatting parser ###############
+/**
+ * Convertit une chaîne de texte style WhatsApp en HTML.
+ * Supporte : Gras (*), Italique (_), Barré (~), Monospace (```).
+ * Traitement ligne par ligne.
+ * @param {string} line Ligne de texte à convertir.
+ */
+function parseWhatsAppFormatting(line) {
+  //On fournit une seule ligne à la fois
+
+    if (!line) return "";
+
+        // Étape B : Extraire et protéger les blocs Monospace (```) AVANT d'échapper le HTML
+        // On les remplace par un placeholder temporaire pour éviter que le gras/italique
+        // ne s'applique à l'intérieur du code.
+        let codeBlocks = [];
+
+        //match: le bloc complet, content: le contenu entre les ```
+        let processedLine = line.replace(/```(.*?)```/g, (match, content) => { 
+            codeBlocks.push(content); // Sauvegarder le contenu (non échappé encore)
+            return `###CODEBLOCK${codeBlocks.length - 1}###`; // Placeholder
+        });
+        console.log("Code blocks found:", codeBlocks);
+
+        // NOTE: input is already HTML-escaped earlier (formatConv). Do NOT escape again
+        // processedLine = escapeHtml(processedLine);
+
+        // Étape C : Appliquer les formatages (Gras, Italique, Barré)
+        // La Regex explique :
+        // 1. Le marqueur (ex: *)
+        // 2. ([^\s\>](?:.*?[^\s\<])?) -> Capture le contenu :
+        //    - [^\s\>] : Doit commencer par un caractère qui n'est ni un espace ni un chevron HTML (pour ne pas casser les tags)
+        //    - (?:.*?[^\s\<])? : Le reste du contenu (non-greedy) qui doit finir par un caractère non-espace/non-chevron.
+        // 3. Le marqueur de fin
+
+        // Gras : *texte*  (allow start/space/any-punct before and space/any-punct/end after)
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])\*([^\s*](?:.*?[^\s*])?)\*(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<strong>$1</strong>');
+
+        // Italique : _texte_  (allow start/space/any-punct before and space/any-punct/end after)
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])_([^\s_](?:.*?[^\s_])?)_(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<em>$1</em>');
+
+        // Barré : ~texte~  (allow start/space/any-punct before and space/any-punct/end after)
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])~([^\s~](?:.*?[^\s~])?)~(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<del>$1</del>');
+
+        // Étape D : Restaurer les blocs Monospace (échapper leur contenu maintenant)
+        processedLine = processedLine.replace(/###CODEBLOCK(\d+)###/g, (match, index) => { //index: numéro du bloc ("\d+")
+            //const escapedContent = escapeHtml(codeBlocks[index]);
+            return `<code class="msg-monospace-format">${codeBlocks[index]}</code>`;
+        });
+
+        console.log("Processed line: ", processedLine);
+        return processedLine;
+    }
+
+
+// Fonction utilitaire pour échapper les caractères HTML spéciaux
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;") //Le "g" (pour global) permet de remplacer toutes les occurrences
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 //################# CODE ##############
@@ -320,6 +385,20 @@ fetch(chatPath)
               messageTxt = messageTxt.replace("&lt;This message was edited&gt;","");
               msgEdited = `<span class="edited-indicator">(edited)</span>`;
             }
+
+            /*Formatting treatment process (inspired of .md)
+            Bold: btw "*[...]*"
+            Italic: "_[...]_"
+            Strikethrough: "~[...]~"
+            Code sample: "```[...]```"
+            */
+            //We first split by <br>: for 1 paragraph only
+           listForSyntax = messageTxt.split("<br>");
+           messageTxt = "";
+           listForSyntax.forEach(line => {
+
+            messageTxt += parseWhatsAppFormatting(line) + "<br>";
+           });
 
             messageModel = 
   `<div id="msg${(i/2)+1}" class="chat-message ${sender}${specialMessageClass}">

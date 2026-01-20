@@ -378,10 +378,15 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   color: #fff;
 }
 
-/* Special styles for special message types */
+/*################ Special styles for special message types ##################*/
 .chat-message.missingContent {
   font-style: italic;
   color: #b60000;
+}
+
+/* Color adjustements for sender (less visible on blue) */
+.chat-message.missingContent.sent {
+  color: #f00;
 }
 
 .chat-message.messageDeleted {
@@ -395,6 +400,14 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   margin-right: 5px;
   width: 20px;
   height: 20px;
+}
+
+.msg-monospace-format {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #3e3e3e70;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.95em;
 }
 
 

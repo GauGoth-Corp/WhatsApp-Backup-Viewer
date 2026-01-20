@@ -1,8 +1,8 @@
 9/24/26, 15:37 - Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more.
-9/24/26, 15:37 - Features and App functionalities 🎉: Hello, here is a WhatsApp chat featuring various functionalities of the WhatsApp Backup Viewer app!
-9/24/26, 15:38 - Features and App functionalities 🎉: 1) Basic Text Messages
-9/24/26, 15:39 - Môa: Hi! My name is Môa.
-9/24/26, 15:40 - Features and App functionalities 🎉: 2) Media Messages omitted
+9/24/26, 15:37 - Môa: Hello, here is a WhatsApp chat featuring *various functionalities* of the _WhatsApp Backup Viewer_ app!
+9/24/26, 15:38 - Môa: 1) Basic Text Messages
+9/24/26, 15:39 - Features and App functionalities 🎉: Hi! My name is Môa.
+9/24/26, 15:40 - Môa: 2) Media Messages omitted
 9/24/26, 15:41 - Features and App functionalities 🎉: <Media omitted>
 9/24/26, 15:42 - Môa: 3) Deleted Messages
 9/24/26, 15:43 - Features and App functionalities 🎉: This message was deleted
@@ -11,6 +11,21 @@
 9/24/26, 15:46 - Môa: 5) View Once medias
 9/24/26, 15:47 - Features and App functionalities 🎉: <View once voice message omitted>
 9/24/26, 15:47 - Features and App functionalities 🎉: 
-9/24/26, 15:47 - Features and App functionalities 🎉: 
-9/24/26, 15:47 - Môa: 
-
+9/24/26, 15:47 - Môa: 6) Formatted Text
+9/24/26, 15:48 - Features and App functionalities 🎉: This is a *bold* word! 
+Use it like this: ```*bold*```
+9/24/26, 15:49 - Features and App functionalities 🎉: This is an _italic_ word!
+Use it like this: ```_italic_```
+9/24/26, 15:50 - Features and App functionalities 🎉: This is a ~strikethrough~ word!
+Use it like this: ```~strikethrough~```
+9/24/26, 15:51 - Features and App functionalities 🎉: This is a ```monospace``` word!
+Use it using triple backticks: ```
+9/24/26, 15:52 - Features and App functionalities 🎉: Here is an short text showing formatting in context:
+Hey, I'm using *_WhatsApp Backup Viewer_*! It's really ~bad~ _awesome_!
+See? We can mix different formats inside a sentence: *absolutely _really_ ~cool~ wonderful, _mixed_ formatting*!
+Beware of spaces: * bold * is not bold, but *bold* is.
+Do you like ```monospace``` text? Use it for code snippets: ```console.log("Hello World");```
+9/24/26, 15:53 - Môa: 7) Links & E-mail addresses
+9/24/26, 15:54 - Features and App functionalities 🎉: Visit http://gaugoth.corp.free.fr
+Contact us at gaugoth.corp@gmail.com
+9/24/26, 15:54 - Môa: Test with ```https://example.com/test?param=1&other=2``` and ````

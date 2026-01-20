@@ -4,7 +4,7 @@
 11/15/22, 12:31 - Test: This message was deleted
 11/15/22, 12:36 - Test: <Media omitted>
 11/15/22, 12:38 - Test: <Media omitted>
-11/15/22, 13:12 - Môa 💫: J'écouterai plus tard tes vocaux dsl, j arrive pas à les télécharger à cause du wifi de *****
+11/15/22, 13:12 - Môa 💫: J'écouterai plus tard tes vocaux dsl, j arrive pas à les *télécharger* à cause du wifi de *****
 11/15/22, 13:16 - Test: tkt
 11/15/22, 17:40 - Môa 💫: Ah c pas cool ça
 11/15/22, 17:41 - Môa 💫: Mais y a pas moyen que tu te taises nanmého ??
@@ -28,7 +28,7 @@
 
 www.reparations-pas-cheres.fr
 14/16/22, 06:52 - Môa 💫: www.reparations-pas-cheres.fr
-11/16/22, 06:53 - Môa 💫: Alors en fait je vais déjà te raconter une aventure extraordinaire que j'ai vécue récemment. C'était un jour d'hiver, et la neige tombait à flots. J'ai décidé d'aller faire du ski avec des amis dans les montagnes. L'excitation était à son comble !
+11/16/22, 06:53 - Môa 💫: Alors en fait je vais déjà te raconter une aventure _extraordinaire_ que j'ai vécue récemment. C'était un jour d'hiver, et la neige tombait à flots. J'ai décidé d'aller faire du ski avec des amis dans les montagnes. L'excitation était à son comble !
 Nous avons pris les remontées mécaniques et sommes montés jusqu'au sommet de la montagne. La vue était à couper le souffle, avec des paysages enneigés à perte de vue. Nous avons commencé à dévaler les pistes, ressentant la fraîcheur de l'air et la vitesse sous nos skis.
 Tout se passait à merveille jusqu'à ce que l'un de mes amis perde le contrôle et fasse une chute spectaculaire. Heureusement, il n'a pas été gravement blessé, mais cela nous a tous un peu secoués. Nous avons décidé de faire une pause pour nous remettre de nos émotions.
 Après cette pause, nous avons repris le ski avec encore plus de prudence. Nous avons exploré différentes pistes, certaines plus difficiles que d'autres, mais toujours avec le sourire aux lèvres. La sensation de glisser sur la neige fraîche était tout simplement incroyable.
@@ -58,3 +58,62 @@ riflced -é&pç_y)&é12938àé&)~#@]~#^
 11/16/22, 06:57 - Môa 💫: Mdrrr kéçekonçamûse <This message was edited>
 11/16/22, 06:58 - Test: Je sais pas trop 😂
 11/16/22, 06:58 - Môa 💫: - TEST démoniaque
+11/16/22, 06:58 - Môa 💫: http://gaugoth.corp.free.fr/credits/contact?subject=Contact%20us!
+11/16/22, 06:59 - Test: Voici un copié-collé de l'article disponible ici : http://gaugoth.corp.free.fr/gallery/
+
+```Gallery - 06/09/2023```
+
+*_Mini Golf 3D: The Pirate flag_* wasn't created in a day. Here you'll find screenshots, advertisements and short commentaries on the game's conception and production.
+
+_Disclaimer: all names cited in this article are credited on the about page._
+
+I was introduced to Unity during a week's work experience with MagicMakers. I made a mini platform game.
+
+*Unity: what is it?*
+
+Unity is a powerful software package for developing video games, whether in 2D or 3D, and it's all free!
+
+Everything you want to program in this software is coded in C# (pronounced C Sharp). For anyone interested, it's a combination of C++ and JavaScript.
+
+*And what about mini-golf?*
+
+This course with MagicMaker really fascinated me, and I wanted to go further, expanding my knowledge of Unity. At first, I wanted to make a space combat video game in a well-known universe... Well, according to my father (who's an inveterate programmer), with so little experience in programming and Unity, I might have been aiming high from the start.
+
+So we went looking for tutorials, only to come across a book that explains all the basics of Unity through the development of a mini-golf game: Créez des jeux de A à Z avec Unity, written by Anthony Cardinale and published by D-Booker.
+
+I followed the steps in the book step by step, but it still wasn't enough for me! I went deep into the the smallest corners of video game development. I started by picking a theme. Why not a pirate theme? I found a lot of pirate content. And at the same time, every golf hole has a flag on it. See? Mini Golf 3D: The Pirate flag.
+
+So I did a lot of programming (with the precious help of my father 🙃), had the good idea of randomly moving the ships in my levels, got all sorts of resources online (thanks to you!!), created an organization to carry my game: GauGoth Corp., edited a document to know how to install the game, edited a document to know how to play it, even made ads! And finally, I've created a website to support my game online .
+
+- How to install Mini Golf 3D The Pirate flag.pdf
+
+- Introduction document of Mini Golf 3D The Pirate flag.pdf
+
+- Various ads
+
+You can also admire the logos I've created!
+
+Left: the pirate flag, where swords are replaced by golf clubs.
+
+On the right, the logo of Mini Golf 3D: The Pirate flag.
+
+ 
+*As a bonus*
+
+Bonus: the QR code you may have used to access the site 😉.
+
+*What next?*
+
+Now that the Beta version of Mini Golf 3D: The Pirate flag has been released, I'm not stopping there. GauGoth Corp. will continue to update the game regularly, adding new levels, as well as the store!
+
+The website will also be updated with new versions of Mini Golf 3D: The Pirate flag.
+
+And who knows, maybe I'll get around to developing a space combat video game in a well-known universe (as I mentioned earlier in this article)...
+
+Now let's play!
+
+I congratulate you if you've read this entire article, hats off to you (makes my day 😄)!! Did you know that two web pages are hidden inside this site? It's your turn to find them!
+
+Now, enjoy yourselves.
+
+Play!
