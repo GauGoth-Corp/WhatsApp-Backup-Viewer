@@ -1,7 +1,7 @@
 # WhatsApp Backup Viewer
 <i>Version Bêta<br/>
 **License file**<br/>
-12/01/2025</i>
+12/01/2026</i>
 
 *********************************************************************
 
@@ -22,7 +22,7 @@ WhatsApp Backup Viewer is a tool to view your WhatsApp chat and media backups wi
 
 THIS DOCUMENT AUTHORIZES YOU TO USE THE PROGRAM WhatsApp Backup Viewer (V. Bêta) UNDER THE FOLLOWING TERMS AND CONDITIONS:
 
-- This program has been distributed to you by Aomm-lgtm and the GauGoth Corp. organization. All rights reserved. Any reproduction, duplication, or copy, complete or partial, without the agreement of GauGoth Corp. or Aomm-lgtm is strictly forbidden.
+- This program has been distributed to you by the GauGoth Corp. organization. All rights reserved. Any reproduction, duplication, or copy, complete or partial, without the agreement of GauGoth Corp. is strictly forbidden.
 - WhatsApp Backup Viewer and GauGoth Corp.'s goal is not to make money, but simply to have fun and share its creations. All GauGoth Corp. products are free of charge.
 
 ## Warranty Disclaimer
