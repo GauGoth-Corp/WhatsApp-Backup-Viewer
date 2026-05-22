@@ -11,6 +11,11 @@
   }
   else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
 
+  //Checks if the path exists, if not creates it
+  if (!file_exists($path)) {
+    mkdir($path, 0777, true);
+  }
+
   $conversations = array_diff(scandir($path), array('..', '.'));
 ?>
 
@@ -55,7 +60,7 @@
       $i = 1;
       foreach($conversations as $conv): 
             if (is_dir($path . $conv) && $conv != "real"): ?>
-            <a id="chat-item-<?php echo $i;?>" class="chat-item" href="chat-view.html?chat=<?php echo $conv?>">
+            <a id="chat-item-<?php echo $i; $i++;?>" class="chat-item" href="chat-view.html?real=true&chat=<?php echo $conv?>">
               <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
               <div class="chat-info">
                 <span class="chat-name"><?php echo $conv?></span>
@@ -63,7 +68,19 @@
               </div>
             </a>
       <?php endif; 
-    endforeach; ?>      
+    endforeach; 
+    
+    if ($i == 1): ?>
+      <a id="chat-item-0" class="chat-item" href="#">
+        <img class="chat-avatar" src="datas/warning-icon.svg" alt="Warning">
+        <div class="chat-info">
+          <span class="chat-name">No conversations found. Please add your WhatsApp backup folders to the "conversations" directory.</span>
+        </div>
+      </a>    
+      
+    <?php endif;
+
+    ?>      
      
       <!-- autres .chat-item -->
     </div><!-- end .conversations-List -->
