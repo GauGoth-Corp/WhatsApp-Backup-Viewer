@@ -1,27 +1,3 @@
-<?php
-
-  $path ="";
-  $private = false;
-  //Récupère dans une array le nom de chaque dossier dans le dossier "/W-Backup-Viewer/conversations"
-  if (isset($_GET["private"])) {
-    if ($_GET["private"] == true) {
-      $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\private\\";
-      $private = true;
-
-    }
-    else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
-  }
-  else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
-
-  //Checks if the path exists, if not creates it
-  if (!file_exists($path)) {
-    mkdir($path, 0777, true);
-  }
-
-  $conversations = array_diff(scandir($path), array('..', '.'));
-?>
-
-
 <!-- Copyright © 2021-2026 GauGoth Corp. All rights reserved -->
 
 <!DOCTYPE html>
@@ -54,45 +30,83 @@
     <h1 id="title">Welcome to Whatsapp Backup Viewer!</h1>
     <p class="subtitle">Easily view and read your WhatsApp chat backups. <i> - By GauGoth Corp.</i></p>
     <hr/>
+
     
     <div class="conversations-List">
       <h2>Your Conversations</h2>
 
-      <?php 
-      $i = 1;
-      foreach($conversations as $conv): 
-            if (is_dir($path . $conv) && $conv != "private"): ?>
-            <a id="chat-item-<?php echo $i; $i++;?>" class="chat-item" href="chat-view.html?chat=<?php echo $conv; if ($private): ?>&private=true<?php endif; ?>">
-              <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-              <div class="chat-info">
-                <span class="chat-name"><?php echo $conv?></span>
-                <span class="chat-date">15/01/2026</span>
-              </div>
-            </a>
-      <?php endif; 
-    endforeach; 
-    
-    if ($i == 1): ?>
-      <a id="chat-item-0" class="chat-item" href="#">
-        <img class="chat-avatar" src="datas/warning-icon.svg" alt="Warning">
+      <a id="chat-item-1" class="chat-item" href="chat-view.html?chat=Louise DLC&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
         <div class="chat-info">
-          <span class="chat-name">No conversations found. Please add your WhatsApp backup folders to the "conversations" directory.</span>
+          <span class="chat-name">Louise DLC</span>
+          <span class="chat-date">15/01/2026</span>
         </div>
-      </a>    
-      
-    <?php endif;
+      </a>      
 
-    ?>      
-     
+      <a id="chat-item-2" class="chat-item" href="chat-view.html?chat=Eliseeee 🐹&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Eliseeee 🐹</span>
+          <span class="chat-date">20/09/2025</span>
+        </div>
+      </a>
+
+      <a id="chat-item-3" class="chat-item" href="chat-view.html?chat=Fares ✈️&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Fares ✈️</span>
+          <span class="chat-date">19/09/2025</span>
+        </div>
+      </a>
+
+      <a id="chat-item-4" class="chat-item" href="chat-view.html?chat=Paula&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Paula</span>
+          <span class="chat-date">18/09/2025</span>
+        </div>
+      </a>
+
+      <a id="chat-item-5" class="chat-item" href="chat-view.html?chat=Olive 😋&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Olive 😋</span>
+          <span class="chat-date">18/09/2025</span>
+        </div>
+      </a>      
+
+      <a id="chat-item-6" class="chat-item" href="chat-view.html?chat=Thomas 🍅 Reltgen&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Thomas 🍅 Reltgen</span>
+          <span class="chat-date">18/09/2025</span>
+        </div>
+      </a>     
+
+      <a id="chat-item-7" class="chat-item" href="chat-view.html?chat=Agnès 🚲⏰️🚳&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Agnès 🚲⏰️🚳</span>
+          <span class="chat-date">16/09/2025</span>
+        </div>
+      </a>  
+
+      <a id="chat-item-8" class="chat-item" href="chat-view.html?chat=Mathilde 🐌&private=true">
+        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+        <div class="chat-info">
+          <span class="chat-name">Mathilde 🐌</span>
+          <span class="chat-date">15/09/2025</span>
+        </div>
+      </a>        
       <!-- autres .chat-item -->
     </div><!-- end .conversations-List -->
 
-
+    
     <!-- About Box -->
     <div class="box" id="about"><span id="reduce-about" class="box-reduce">–</span>
       <div id="about-title"><h2>About Whatsapp Backup Viewer</h2></div>
       <p><span id="about-intro">
-        Whatsapp Backup Viewer is a free-of-use conv developped by GauGoth Corp. Through an easy handling interface, read your WhatsApp chat and media backups, private conversations or groups, witho</span><span id="about-content-to-hide1">ut needing to restore them on your mobile device.</span><span id="about-points" class="box-points">Read more...</span>
+        Whatsapp Backup Viewer is a free-of-use tool developped by GauGoth Corp. Through an easy handling interface, read your WhatsApp chat and media backups, private conversations or groups, witho</span><span id="about-content-to-hide1">ut needing to restore them on your mobile device.</span><span id="about-points" class="box-points">Read more...</span>
       </p>
       <div id="about-content-to-hide2"><p>This project is placed under 'All Rights Reserved' license from GauGoth Corp. That means that all contents, scripts, pages, etc. are the exclusive property of GauGoth Corp., are copyrighted and subject to our <a href="http://gaugoth.corp.free.fr/privacy-policy/" target="_blank">Privacy Policy</a>: thus you cannot redistribute or modify <i>Whatsapp Backup Viewer</i> without permission.</p>
         <p>However, remember that your chats and all their contents stay your own property! We do not store any data from your backups, and all processing is done locally on your device. For more details, please read our <a href="http://gaugoth.corp.free.fr/terms-of-service/" target="_blank">Terms of Service</a>.
@@ -140,7 +154,6 @@
   <div id="footer">
     <p>&copy; 2021-2026 GauGoth Corp. All rights reserved. | <a href="http://gaugoth.corp.free.fr/" target="_blank">GauGoth Corp. Official Website</a></p>
   <!-- End footer --></div>
-
   </div>
   
 <script type="text/javascript" src="main-script.js"></script>

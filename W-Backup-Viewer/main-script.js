@@ -149,16 +149,16 @@ function parseWhatsAppFormatting(line) {
 const newURL = new URL(window.location.href);
 const chatName = newURL.searchParams.get("chat");
 
-// Real path (real paths for test, in .gitignore)
-// == For tests with real conversations, much more data, varied content, true situations... ==
-let realPath = "";
-if (newURL.searchParams.get("real") == "true") {
+// private path (private paths for test, in .gitignore)
+// == For tests with private conversations, much more data, varied content, true situations... ==
+let privatePath = "";
+if (newURL.searchParams.get("private") == "true") {
   //let Path_conversationTest = "conversations/Test/WhatsApp Chat with Test.txt";
-  realPath = "real/";
+  privatePath = "private/";
 }
 
 //let Path_conversationTest = "conversations/Test/WhatsApp Chat with Test.txt";
-const chatPath = "conversations/"+realPath+chatName+"/WhatsApp Chat with "+chatName+".txt";
+const chatPath = "conversations/"+privatePath+chatName+"/WhatsApp Chat with "+chatName+".txt";
 //Affiche le bon titre de chat
 document.getElementById("chat-title").innerHTML = chatName;
 document.title= chatName+ " - Whatsapp Backup Viewer | GauGoth Corp.";
@@ -198,6 +198,11 @@ fetch(chatPath)
     function RunAfterLoaded() {
       //Enlève le message "chat empty"
       document.getElementById("empty-chat").style.display = "none";
+
+      //Met l'argument "?private=true" dans l'URL du back button si on vient d'un chat privé (dossier "private")
+      if (newURL.searchParams.get("private") == "true") {
+        document.getElementById("back-home-btn").href = "/?private=true";
+      }
 
       const chatMessagesElement = document.getElementById("chat-messages");
       let messageHeader;
