@@ -1,10 +1,12 @@
 <?php
 
   $path ="";
+  $real = false;
   //Récupère dans une array le nom de chaque dossier dans le dossier "/W-Backup-Viewer/conversations"
   if (isset($_GET["private"])) {
     if ($_GET["private"] == true) {
       $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\real\\";
+      $real = true;
 
     }
     else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
@@ -60,7 +62,7 @@
       $i = 1;
       foreach($conversations as $conv): 
             if (is_dir($path . $conv) && $conv != "real"): ?>
-            <a id="chat-item-<?php echo $i; $i++;?>" class="chat-item" href="chat-view.html?real=true&chat=<?php echo $conv?>">
+            <a id="chat-item-<?php echo $i; $i++;?>" class="chat-item" href="chat-view.html?chat=<?php echo $conv; if ($real): ?>&real=true<?php endif; ?>">
               <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
               <div class="chat-info">
                 <span class="chat-name"><?php echo $conv?></span>
