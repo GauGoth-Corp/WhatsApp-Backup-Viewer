@@ -1,3 +1,10 @@
+<?php
+
+  //Récupère dans une array le nom de chaque dossier dans le dossier "/W-Backup-Viewer/conversations"
+  $conversations = array_diff(scandir($_SERVER['DOCUMENT_ROOT'] . "\conversations\\"), array('..', '.'));
+?>
+
+
 <!-- Copyright © 2021-2026 GauGoth Corp. All rights reserved -->
 
 <!DOCTYPE html>
@@ -34,45 +41,19 @@
     <div class="conversations-List">
       <h2>Your Conversations</h2>
 
-      <a id="chat-item-1" class="chat-item" href="chat-view.html?chat=Features and App functionalities 🎉">
-        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-        <div class="chat-info">
-          <span class="chat-name">Features and App functionalities 🎉</span>
-          <span class="chat-date">15/01/2026</span>
-        </div>
-      </a>
-
-      <a id="chat-item-2" class="chat-item" href="chat-view.html?chat=Test">
-        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-        <div class="chat-info">
-          <span class="chat-name">Test</span>
-          <span class="chat-date">20/09/2025</span>
-        </div>
-      </a>
-
-      <a id="chat-item-3" class="chat-item" href="chat-view.html?chat=Test-no-error">
-        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-        <div class="chat-info">
-          <span class="chat-name">Test-no-error</span>
-          <span class="chat-date">19/09/2025</span>
-        </div>
-      </a>
-
-      <a id="chat-item-4" class="chat-item" href="chat-view.html?chat=Test short">
-        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-        <div class="chat-info">
-          <span class="chat-name">Test short</span>
-          <span class="chat-date">05/05/2025</span>
-        </div>
-      </a>   
-      
-      <a id="chat-item-5" class="chat-item" href="chat-view.html?chat=Very long and very annonyiong chat name to test you. This file cannot be pushed with Git because its name is really too long... Did you know that in Star Wars Yoda s species is never named">
-        <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
-        <div class="chat-info">
-          <span class="chat-name">Very long and very annonyiong chat name to test you. This file cannot be pushed with Git because its name is really too long... Did you know that in Star Wars Yoda s species is never named</span>
-          <span class="chat-date">02/03/2024</span>
-        </div>
-      </a>        
+      <?php 
+      $i = 1;
+      foreach($conversations as $conv): 
+            if (is_dir($_SERVER['DOCUMENT_ROOT'] . "\conversations\\" . $conv) && $conv != "real"): ?>
+            <a id="chat-item-<?php echo $i;?>" class="chat-item" href="chat-view.html?chat=<?php echo $conv?>">
+              <img class="chat-avatar" src="datas/user-icon.png" alt="Avatar">
+              <div class="chat-info">
+                <span class="chat-name"><?php echo $conv?></span>
+                <span class="chat-date">15/01/2026</span>
+              </div>
+            </a>
+      <?php endif; 
+    endforeach; ?>      
      
       <!-- autres .chat-item -->
     </div><!-- end .conversations-List -->
@@ -82,7 +63,7 @@
     <div class="box" id="about"><span id="reduce-about" class="box-reduce">–</span>
       <div id="about-title"><h2>About Whatsapp Backup Viewer</h2></div>
       <p><span id="about-intro">
-        Whatsapp Backup Viewer is a free-of-use tool developped by GauGoth Corp. Through an easy handling interface, read your WhatsApp chat and media backups, private conversations or groups, witho</span><span id="about-content-to-hide1">ut needing to restore them on your mobile device.</span><span id="about-points" class="box-points">Read more...</span>
+        Whatsapp Backup Viewer is a free-of-use conv developped by GauGoth Corp. Through an easy handling interface, read your WhatsApp chat and media backups, private conversations or groups, witho</span><span id="about-content-to-hide1">ut needing to restore them on your mobile device.</span><span id="about-points" class="box-points">Read more...</span>
       </p>
       <div id="about-content-to-hide2"><p>This project is placed under 'All Rights Reserved' license from GauGoth Corp. That means that all contents, scripts, pages, etc. are the exclusive property of GauGoth Corp., are copyrighted and subject to our <a href="http://gaugoth.corp.free.fr/privacy-policy/" target="_blank">Privacy Policy</a>: thus you cannot redistribute or modify <i>Whatsapp Backup Viewer</i> without permission.</p>
         <p>However, remember that your chats and all their contents stay your own property! We do not store any data from your backups, and all processing is done locally on your device. For more details, please read our <a href="http://gaugoth.corp.free.fr/terms-of-service/" target="_blank">Terms of Service</a>.

@@ -1,7 +1,7 @@
 @echo off
 
 REM Use the local path to the parent dir
-cd "%~dp0.."
+cd "%~dp0../W-Backup-Viewer"
 
 setlocal enabledelayedexpansion
 
