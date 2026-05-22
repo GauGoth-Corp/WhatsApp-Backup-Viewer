@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Démarrer serveur PHP",
+      "type": "php",
+      "request": "launch",
+      "runtimeExecutable": "php",
+      "args": [
+        "-S", "localhost:8000",
+        "-t", "${workspaceFolder}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "port": 0,
+      "postDebugTask": "Ouvrir navigateur"
+    }
+  ]
+}

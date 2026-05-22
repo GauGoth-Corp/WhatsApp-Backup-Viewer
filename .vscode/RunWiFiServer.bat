@@ -1,9 +1,11 @@
 @echo off
-cd "%~dp0W-Backup-Viewer"
+
+REM Use the local path to the parent dir
+cd "%~dp0.."
 
 setlocal enabledelayedexpansion
 
-rem Appelle PowerShell et capture la première IPv4 utile
+rem Appelle PowerShell et capture la premiere IPv4 utile
 for /f "usebackq delims=" %%I in (`
   powershell -NoProfile -Command ^
     "(Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notmatch '^169\.254' -and $_.IPAddress -ne '127.0.0.1' } | Select-Object -First 1 -ExpandProperty IPAddress)"
