@@ -163,6 +163,13 @@ const chatPath = "conversations/"+privatePath+chatName+"/WhatsApp Chat with "+ch
 document.getElementById("chat-title").innerHTML = chatName;
 document.title= chatName+ " - Whatsapp Backup Viewer | GauGoth Corp.";
 
+//Met l'argument "?private=true" dans l'URL du back button si on vient d'un chat privé (dossier "private")
+if (newURL.searchParams.get("private") == "true") {
+  document.getElementById("back-home-btn").href = "..?private=true";
+} else {
+  document.getElementById("back-home-btn").href = "..";
+}
+
 fetch(chatPath)
   .then(response => {
     if (!response.ok) throw new Error('Erreur réseau : ' + response.status);
@@ -198,11 +205,6 @@ fetch(chatPath)
     function RunAfterLoaded() {
       //Enlève le message "chat empty"
       document.getElementById("empty-chat").style.display = "none";
-
-      //Met l'argument "?private=true" dans l'URL du back button si on vient d'un chat privé (dossier "private")
-      if (newURL.searchParams.get("private") == "true") {
-        document.getElementById("back-home-btn").href = "/?private=true";
-      }
 
       const chatMessagesElement = document.getElementById("chat-messages");
       let messageHeader;
@@ -263,7 +265,9 @@ fetch(chatPath)
           messageHour = messageHeader.split(", ")[1].split(" -")[0];
           //console.log(messageHour);
 
-          if (messageContent == "Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more.") {
+          if (messageContent == "Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. Learn more."
+            || messageContent == "Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them. *Learn more*"
+          ) {
             //console.log("Info");
             messageModel = 
   `<div class="chat-info-message warning">
@@ -405,7 +409,7 @@ fetch(chatPath)
       //Makes the scroll buttons appear/disappear on load
       scrollFunction();
 
-      console.log("Chat loaded.");
+      console.log("Chat loaded successfully.");
 
       //chatMessagesElement.insertAdjacentHTML('afterbegin', "<p>" +formatConv +"</p>");
 
@@ -427,10 +431,7 @@ fetch(chatPath)
   })
   //Si le JS n'a pas réussi à récupérer le fichier du header :
   .catch(erreur => {
-    /* Attendre le chargement complet de la page : */
-    document.addEventListener("DOMContentLoaded", function() {
 
-        console.error('Error when loading the conversation source file:', erreur);
         let messageContent = "Network error. Please reload the page or try again later.";
          let messageModel = 
 `<div class="chat-info-message error">
@@ -438,7 +439,6 @@ fetch(chatPath)
 </div>\n`        
         document.getElementById('chat-messages').innerHTML = '<p>'+messageModel+'</p>';
 
-    });
     
   });
 

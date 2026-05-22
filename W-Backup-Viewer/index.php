@@ -5,13 +5,13 @@
   //Récupère dans une array le nom de chaque dossier dans le dossier "/W-Backup-Viewer/conversations"
   if (isset($_GET["private"])) {
     if ($_GET["private"] == true) {
-      $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\private\\";
+      $path = "conversations\\private\\";
       $private = true;
 
     }
-    else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
+    else $path = "conversations\\";
   }
-  else $path = $_SERVER['DOCUMENT_ROOT'] . "\conversations\\";
+  else $path = "conversations\\";
 
   //Checks if the path exists, if not creates it
   if (!file_exists($path)) {
@@ -31,7 +31,7 @@
 
 <title>Whatsapp Backup Viewer | GauGoth Corp.</title> <!-- Titre de la page-->
 
-<link rel="shortcut icon" href="datas/logo_gaugoth_corp_basic_16x16.ico"> <!-- Récupère l'icone de GauGoth Corp. et l'initialise sur le site-->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -143,7 +143,6 @@
 
   </div>
   
-<script type="text/javascript" src="main-script.js"></script>
 
 
 </body>
