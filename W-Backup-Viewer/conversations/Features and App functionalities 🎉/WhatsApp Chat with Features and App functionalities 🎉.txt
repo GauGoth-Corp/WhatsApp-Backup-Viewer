@@ -28,4 +28,3 @@ Do you like ```monospace``` text? Use it for code snippets: ```console.log("Hell
 9/24/26, 15:53 - Môa: 7) Links & E-mail addresses
 9/24/26, 15:54 - Features and App functionalities 🎉: Visit http://gaugoth.corp.free.fr
 Contact us at gaugoth.corp@gmail.com
-9/24/26, 15:54 - Môa: Test with ```https://example.com/test?param=1&other=2``` and ````

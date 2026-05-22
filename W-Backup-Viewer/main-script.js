@@ -107,48 +107,36 @@ function scrollToBottom() {
  * Convertit une chaîne de texte style WhatsApp en HTML.
  * Supporte : Gras (*), Italique (_), Barré (~), Monospace (```).
  * Traitement ligne par ligne.
- * @param {string} line Ligne de texte à convertir.
+ * @param {string} line Ligne de texte à formater
+ * @returns {string} Ligne formatée grâce à des balises HTML
  */
 function parseWhatsAppFormatting(line) {
   //On fournit une seule ligne à la fois
+  //Note : on utilise des regex très complexes, avec notamment des lookbehind et lookahead 
 
     if (!line) return "";
 
-        // Étape B : Extraire et protéger les blocs Monospace (```) AVANT d'échapper le HTML
-        // On les remplace par un placeholder temporaire pour éviter que le gras/italique
-        // ne s'applique à l'intérieur du code.
+        //1) Ordre de processing : on traîte d'abord les blocs de code : le formatage interne n'est pas appliqué
         let codeBlocks = [];
 
         //match: le bloc complet, content: le contenu entre les ```
         let processedLine = line.replace(/```(.*?)```/g, (match, content) => { 
-            codeBlocks.push(content); // Sauvegarder le contenu (non échappé encore)
-            return `###CODEBLOCK${codeBlocks.length - 1}###`; // Placeholder
+            codeBlocks.push(content); //Les code blocks sont stockés dans une liste et remplacés par un placeholder
+            return `###CODEBLOCK${codeBlocks.length - 1}###`;
         });
         console.log("Code blocks found:", codeBlocks);
 
-        // NOTE: input is already HTML-escaped earlier (formatConv). Do NOT escape again
-        // processedLine = escapeHtml(processedLine);
+        //Gras : *texte* 
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<\>"'`«"'.,;:!?\-–—…])\*([^\s*](?:.*?[^\s*])?)\*(?=[\s\.,;:!?\)\]\}\>\<"'`»"'<>…\-–—]|$)/g, '<strong>$1</strong>');
 
-        // Étape C : Appliquer les formatages (Gras, Italique, Barré)
-        // La Regex explique :
-        // 1. Le marqueur (ex: *)
-        // 2. ([^\s\>](?:.*?[^\s\<])?) -> Capture le contenu :
-        //    - [^\s\>] : Doit commencer par un caractère qui n'est ni un espace ni un chevron HTML (pour ne pas casser les tags)
-        //    - (?:.*?[^\s\<])? : Le reste du contenu (non-greedy) qui doit finir par un caractère non-espace/non-chevron.
-        // 3. Le marqueur de fin
+        //Italique : _texte_ 
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<\>"'`«"'.,;:!?\-–—…])_([^\s_](?:.*?[^\s_])?)_(?=[\s\.,;:!?\)\]\}\>\<"'`»"'<>…\-–—]|$)/g, '<em>$1</em>');
 
-        // Gras : *texte*  (allow start/space/any-punct before and space/any-punct/end after)
-        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])\*([^\s*](?:.*?[^\s*])?)\*(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<strong>$1</strong>');
+        //Barré : ~texte~ 
+        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<\>"'`«"'.,;:!?\-–—…])~([^\s~](?:.*?[^\s~])?)~(?=[\s\.,;:!?\)\]\}\>\<"'`»"'<>…\-–—]|$)/g, '<del>$1</del>');
 
-        // Italique : _texte_  (allow start/space/any-punct before and space/any-punct/end after)
-        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])_([^\s_](?:.*?[^\s_])?)_(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<em>$1</em>');
-
-        // Barré : ~texte~  (allow start/space/any-punct before and space/any-punct/end after)
-        processedLine = processedLine.replace(/(?<=^|[\s\(\[\{\<"'`«"'<>.,;:!?\-–—…])~([^\s~](?:.*?[^\s~])?)~(?=[\s\.,;:!?\)\]\}\>"'`»"'<>…\-–—]|$)/g, '<del>$1</del>');
-
-        // Étape D : Restaurer les blocs Monospace (échapper leur contenu maintenant)
+        //On peut enfin remettre les blocs de code grâce aux placeholders
         processedLine = processedLine.replace(/###CODEBLOCK(\d+)###/g, (match, index) => { //index: numéro du bloc ("\d+")
-            //const escapedContent = escapeHtml(codeBlocks[index]);
             return `<code class="msg-monospace-format">${codeBlocks[index]}</code>`;
         });
 
@@ -156,16 +144,6 @@ function parseWhatsAppFormatting(line) {
         return processedLine;
     }
 
-
-// Fonction utilitaire pour échapper les caractères HTML spéciaux
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;") //Le "g" (pour global) permet de remplacer toutes les occurrences
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
 
 //################# CODE ##############
 const newURL = new URL(window.location.href);
